@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Al Injaz International — Launch</title>
+<style>
+:root{color-scheme:light;--navy:#0B3D5C;--navy2:#0e3149;--teal:#1B9AAA;--gold:#C8961E;--green:#2E7D52;--ink:#13262F;--grey:#5A6B73;--line:#E4EAEE;--bg:#F4F8F9;--card:#fff}
+*{box-sizing:border-box}html,body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Calibri,Arial,sans-serif;color:var(--ink);background:#fff}
+.nav{position:sticky;top:0;z-index:30;background:rgba(11,61,92,.97);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:12px 22px;backdrop-filter:blur(6px)}
+.nav .b{font-family:Georgia,serif;font-weight:700;font-size:17px}
+.nav .b small{display:block;font-size:10px;letter-spacing:2px;color:#8FCAD2;font-weight:700;text-transform:uppercase}
+.nav .r{display:flex;gap:8px;align-items:center}
+.btn{background:var(--teal);color:#fff;border:0;border-radius:9px;padding:10px 16px;font:inherit;font-weight:600;font-size:14px;cursor:pointer;text-decoration:none;display:inline-block}
+.btn:hover{background:#157e8c}.btn.ghost{background:transparent;border:1px solid #4f7e95;color:#fff}.btn.gold{background:var(--gold)}.btn.gold:hover{background:#a87c16}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+.hero{background:linear-gradient(135deg,var(--navy),#12506f);color:#fff;padding:64px 0 70px;position:relative;overflow:hidden}
+.hero .badge{display:inline-block;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:6px 14px;font-size:12.5px;font-weight:600;margin-bottom:18px}
+.hero h1{font-family:Georgia,serif;font-size:42px;line-height:1.12;margin:0 0 14px;max-width:760px}
+.hero p{font-size:18px;color:#DCEAEE;max-width:660px;line-height:1.5;margin:0 0 24px}
+.hero .ctas{display:flex;gap:12px;flex-wrap:wrap}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+.chip{background:rgba(255,255,255,.1);border-radius:12px;padding:9px 14px;font-size:13px}
+.chip b{font-family:Georgia,serif;font-size:18px;display:block}
+.blob{position:absolute;border-radius:50%;opacity:.16}
+.sec{padding:54px 0}.sec.alt{background:var(--bg)}
+.kick{color:var(--teal);font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:12.5px;margin:0 0 8px}
+.sec h2{font-family:Georgia,serif;font-size:30px;color:var(--navy);margin:0 0 10px}
+.sec .lead{color:var(--grey);font-size:16px;max-width:680px;margin:0 0 26px;line-height:1.5}
+.grid{display:grid;gap:16px}.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:1fr 1fr}.g4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:860px){.g3,.g2,.g4{grid-template-columns:1fr}.hero h1{font-size:32px}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.card .ic{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;margin-bottom:10px}
+.card h3{margin:0 0 6px;color:var(--navy);font-size:17px}.card p{margin:0;color:var(--grey);font-size:13.5px;line-height:1.5}
+.exp{display:grid;grid-template-columns:1fr 1.05fr;gap:24px;align-items:start}@media(max-width:860px){.exp{grid-template-columns:1fr}}
+.chatcard{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.10)}
+.chathead{background:var(--navy);color:#fff;padding:13px 16px}.chathead .t{font-weight:700;font-family:Georgia,serif}.chathead .s{font-size:11px;color:#9FD3DA;display:flex;align-items:center;gap:6px;margin-top:2px}.dot{width:8px;height:8px;border-radius:50%;background:#46d39a;display:inline-block}
+.cbody{height:300px;overflow:auto;padding:14px;background:var(--bg);display:flex;flex-direction:column;gap:9px}
+.msg{max-width:86%;padding:9px 12px;border-radius:13px;font-size:13.5px;line-height:1.5;white-space:pre-wrap}
+.msg.bot{background:#fff;border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:4px}
+.msg.me{background:var(--teal);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.quick{display:flex;flex-wrap:wrap;gap:6px;padding:8px 12px;background:#fff;border-top:1px solid var(--line)}
+.quick button{font-size:12px;border:1px solid var(--line);background:var(--bg);border-radius:14px;padding:5px 11px;cursor:pointer;color:var(--navy)}
+.cin{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--line)}.cin input{flex:1;font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px}
+.pill{display:inline-block;background:#E7F2F3;color:#127;border-radius:11px;padding:3px 10px;font-size:12px;font-weight:600;margin:3px 5px 3px 0;color:var(--navy)}
+.foot{background:var(--navy);color:#fff;padding:40px 0}
+.foot a{color:#9FD3DA}.foot .pos{font-family:Georgia,serif;font-size:20px;max-width:640px;line-height:1.5;margin:0 0 18px}
+.facwrap{display:flex;flex-wrap:wrap;gap:8px}
+[dir=rtl] .hero h1,[dir=rtl] .hero p{margin-left:auto}
+[dir=rtl] .msg.bot{align-self:flex-end}[dir=rtl] .msg.me{align-self:flex-start}
+[dir=rtl] body{text-align:right}
+
+.vid{position:relative;width:100%;padding-top:56.25%;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#000}
+.vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.voices-grid{display:grid;grid-template-columns:1.5fr .9fr;gap:18px;align-items:start}
+@media(max-width:860px){.voices-grid{grid-template-columns:1fr}}
+.sociallinks{display:flex;flex-direction:column;gap:10px}
+.sociallinks a{display:flex;align-items:center;gap:10px;background:var(--bg);border:1px solid var(--line);border-radius:11px;padding:12px 14px;text-decoration:none;color:var(--navy);font-weight:600;font-size:14px}
+.sociallinks a:hover{background:#e9f3f4}
+.tcard{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.tcard .ts{font-size:10.5px;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.tcard .q{font-size:14.5px;color:var(--ink);line-height:1.5}
+.tcard .w{font-size:12.5px;color:var(--grey);margin-top:8px;font-weight:600}
+</style>
+</head>
+<body>
+<div class="nav"><div class="b" id="brand"></div><div class="r">
+  <button class="btn ghost" id="langBtn" onclick="toggleLang()">العربية</button>
+  <a class="btn gold" id="openApp" href="Al_Injaz_Marketing_Command_App.html" target="_blank">Open the App</a></div></div>
+
+<section class="hero">
+  <div class="blob" style="width:340px;height:340px;background:#1B9AAA;top:-90px;right:-60px"></div>
+  <div class="blob" style="width:240px;height:240px;background:#C8961E;bottom:-80px;left:-40px"></div>
+  <div class="wrap" style="position:relative">
+    <span class="badge" id="hBadge"></span>
+    <h1 id="hTitle"></h1>
+    <p id="hSub"></p>
+    <div class="ctas"><a class="btn" id="hCta1" href="#experience"></a><a class="btn ghost" id="hCta2" href="#team"></a></div>
+    <div class="chips" id="hChips"></div>
+  </div>
+</section>
+
+<section class="sec" id="experience">
+  <div class="wrap">
+    <p class="kick" id="kExp"></p><h2 id="tExp"></h2><p class="lead" id="lExp"></p>
+    <div class="exp">
+      <div><div id="expPoints"></div></div>
+      <div class="chatcard">
+        <div class="chathead"><span class="t" id="cTitle"></span><div class="s"><span class="dot"></span><span id="cSub"></span></div></div>
+        <div class="cbody" id="cBody"></div>
+        <div class="quick" id="cQuick"></div>
+        <div class="cin"><input id="cInput" type="text" onkeydown="if(event.key==='Enter')csend()"><button class="btn" id="cSend" onclick="csend()"></button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec alt" id="team">
+  <div class="wrap"><p class="kick" id="kTeam"></p><h2 id="tTeam"></h2><p class="lead" id="lTeam"></p>
+    <div class="grid g3" id="teamGrid"></div></div>
+</section>
+
+<section class="sec" id="why">
+  <div class="wrap"><p class="kick" id="kWhy"></p><h2 id="tWhy"></h2><p class="lead" id="lWhy"></p>
+    <div class="grid g4" id="whyGrid"></div>
+    <h3 style="color:var(--navy);margin:26px 0 10px" id="facTitle"></h3>
+    <div class="facwrap" id="facWrap"></div></div>
+</section>
+
+<section class="sec" id="voices">
+  <div class="wrap"><p class="kick" id="kVoices"></p><h2 id="tVoices"></h2><p class="lead" id="lVoices"></p>
+   <div class="voices-grid">
+     <div>
+       <div class="vid"><iframe src="https://www.youtube.com/embed/videoseries?list=UUE06HC57wq7H5GLQX4U-zSw" title="Al Injaz videos" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
+       <div class="vid" style="margin-top:14px"><iframe src="https://www.youtube.com/embed/LU2VXIVH5yM" title="Al Injaz Sports Day 2026" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
+       <p id="vNote" style="font-size:12px;color:var(--grey);margin-top:8px"></p>
+     </div>
+     <div class="sociallinks" id="socialLinks"></div>
+   </div>
+   <div class="grid g3" id="testis" style="margin-top:20px"></div>
+   <p id="tCap" style="font-size:12px;color:var(--grey);margin-top:10px"></p>
+  </div>
+</section>
+<section class="sec alt" id="aud">
+  <div class="wrap"><p class="kick" id="kAud"></p><h2 id="tAud"></h2><p class="lead" id="lAud"></p>
+    <div class="grid g3" id="audGrid"></div></div>
+</section>
+
+<footer class="foot"><div class="wrap">
+  <p class="pos" id="fPos"></p>
+  <div id="fContact" style="font-size:14px;line-height:1.9"></div>
+  <div style="margin-top:18px"><a class="btn gold" id="fApp" href="Al_Injaz_Marketing_Command_App.html" target="_blank"></a></div>
+  <p style="color:#7fa8b6;font-size:12px;margin-top:22px" id="fNote"></p>
+</div></footer>
+
+<script>
+let lang=localStorage.getItem('aiinjaz_launch_lang')||'en';
+const COL={navy:"#0B3D5C",teal:"#1B9AAA",gold:"#C8961E",green:"#2E7D52"};
+const D={
+ en:{brand:"Al Injaz International<small>Marketing Command · Launch</small>",open:"Open the App",lang:"العربية",
+  hBadge:"🚀 Now live — AI-powered marketing & a 24/7 helpline",
+  hTitle:"A smarter way to experience Al Injaz International",
+  hSub:"Affordable Cambridge education with world-class inclusion — and AI-powered learning. Meet the AI team running our marketing, and try our 24/7 bilingual helpline right here.",
+  hCta1:"Try the helpline ↓",hCta2:"Meet the AI team",
+  chips:[["KG–12","Cambridge & bilingual"],["24/7","Bilingual helpline"],["AI","Progress tracker"],["Every child","Therapist-led inclusion"]],
+  kExp:"Experience it now",tExp:"Our 24/7 helpline — try it live",
+  lExp:"Ask about admissions, fees, the curriculum, special-needs support or transport. This demo answers instantly in English or Arabic — the same assistant parents use any time, day or night.",
+  expPoints:["Instant answers, any hour — in Arabic or English","Quick buttons for the questions parents ask most","Always ends by helping you book a tour or reach our team","Built into our website, app and WhatsApp"],
+  cTitle:"Al Injaz Helpline",cSub:"24/7 · replies instantly",cSend:"Send",cPh:"Type your question…",
+  greet:"Hello! 👋 Welcome to Al Injaz International School, Muscat. How can I help today? Ask me about admissions, fees, the curriculum, our special-needs programme, transport — or book a tour.",
+  q:{adm:"Admissions",tour:"Book a tour",fees:"Fees",sen:"Special needs",transport:"Transport"},
+  kTeam:"Behind the scenes",tTeam:"Meet the AI marketing team",lTeam:"Five specialist AI agents research and run our marketing, coordinated by a Director — visible to leadership in a live command app.",
+  team:[["🎯","Marketing Director","Sets strategy, coordinates the team and integrates everything into one plan."],
+   ["🔭","Market & Competitor Intel","Tracks the Muscat market and competitors, and finds where we win."],
+   ["📣","Content & Social","Tells our story across Instagram, Facebook, WhatsApp and the app — bilingually."],
+   ["🤝","Admissions & CRM","Answers every enquiry fast and guides families from first hello to enrolment."],
+   ["🔎","SEO, Web & Analytics","Helps families find us on Google and measures what's working."],
+   ["🧠","Always-on & learning","The team works around the clock and reports performance live."]],
+  kWhy:"Why families choose us",tWhy:"Real strengths, clearly shown",lWhy:"Not a promise — what we already offer, now front and centre.",
+  why:[["💰","Affordable Cambridge","Globally recognised IGCSE & GED at honest, transparent fees."],
+   ["💙","Every child included","A therapist-led special-needs and inclusion programme."],
+   ["🗣️","Bilingual by design","Confident in Arabic and English, KG to Grade 12."],
+   ["📲","AI progress tracker","Real-time, AI-powered insight into your child's learning."]],
+  facTitle:"On campus in Al Ansab:",
+  facs:["STEM Lab","VR & iPad learning","Maths 3D Lab","Science labs","Swimming pool","Auditorium","Library","Inclusion & therapy rooms","Montessori KG","Cambridge & NSPSA accredited"],
+  kVoices:"From our families",tVoices:"Hear from our parents & see school life",
+  lVoices:"Real moments from our official channels — events, classrooms and parent voices. Watch, then come experience it yourself.",
+  vNote:"Live from our official YouTube channel — videos play on the published website.",
+  socials:[["▶  YouTube — school videos & events","https://www.youtube.com/@alinjazschoolOM"],["📷  Instagram — daily school life","https://www.instagram.com/alinjaz_oman/"],["👍  Facebook — parent stories","https://www.facebook.com/AIIPSMuscat/"]],
+  tSample:"Parent voice",
+  testi:[{q:"\u201C[Paste a real parent quote from your Instagram or Facebook here.]\u201D",w:"\u2014 [Parent name, grade]"},
+   {q:"\u201C[Add another family\u2019s words \u2014 e.g. about the teachers or inclusion support.]\u201D",w:"\u2014 [Parent name, grade]"},
+   {q:"\u201C[Add a quote about the affordable Cambridge programme or the AI progress tracker.]\u201D",w:"\u2014 [Parent name, grade]"}],
+  tCap:"Sample layout \u2014 paste your parents\u2019 real words and Reel links here, or send them to us and we\u2019ll embed the exact posts.",
+  kAud:"Built for everyone",tAud:"See it from your perspective",lAud:"",
+  aud:[["👨‍👩‍👧","For parents","Experience a school that answers instantly, includes every child, and shows your child's progress in your hand."],
+   ["🏛️","For leadership","A complete, low-cost AI marketing capability — strategy, content, admissions and analytics in one command app."],
+   ["🎓","For other schools","A model for how an Omani school can lead with affordable quality, inclusion and AI."]],
+  fPos:"Affordable Cambridge education with world-class inclusion — and AI-powered learning.",
+  fContact:"📍 Al Ansab, Muscat, Sultanate of Oman<br>📞 +968 2458 5299 &nbsp; 💬 WhatsApp +968 92988905<br>✉️ admissions@alinjaz.edu.om &nbsp; 🌐 alinjaz.edu.om",
+  fApp:"Open the Marketing Command app",
+  fNote:"This is a showcase page. The helpline demo answers from a built-in knowledge base so it works in any browser; inside the Cowork app it also uses live AI."},
+ ar:{brand:"الإنجاز الدولية<small>مركز التسويق · الإطلاق</small>",open:"افتح التطبيق",lang:"English",
+  hBadge:"🚀 انطلقنا الآن — تسويق بالذكاء الاصطناعي وخط مساعدة على مدار الساعة",
+  hTitle:"طريقة أذكى لتجربة مدرسة الإنجاز الدولية",
+  hSub:"تعليم كامبردج بأسعار ميسّرة مع دمج عالمي المستوى — وتعلّم معزّز بالذكاء الاصطناعي. تعرّف على فريق الذكاء الاصطناعي الذي يدير تسويقنا، وجرّب خط المساعدة ثنائي اللغة على مدار الساعة هنا.",
+  hCta1:"جرّب خط المساعدة ↓",hCta2:"تعرّف على الفريق",
+  chips:[["روضة–١٢","كامبردج وثنائي اللغة"],["٢٤/٧","خط مساعدة ثنائي اللغة"],["ذكاء اصطناعي","متابعة التقدّم"],["كل طفل","دمج بإشراف أخصائيين"]],
+  kExp:"جرّبها الآن",tExp:"خط المساعدة على مدار الساعة — جرّبه مباشرة",
+  lExp:"اسأل عن القبول والرسوم والمنهج ودعم الاحتياجات الخاصة أو النقل. تجيب هذه التجربة فوراً بالعربية أو الإنجليزية — نفس المساعد الذي يستخدمه أولياء الأمور في أي وقت.",
+  expPoints:["إجابات فورية في أي ساعة — بالعربية أو الإنجليزية","أزرار سريعة لأكثر أسئلة أولياء الأمور شيوعاً","يساعدك دائماً على حجز زيارة أو الوصول إلى فريقنا","مدمج في موقعنا وتطبيقنا والواتساب"],
+  cTitle:"خط مساعدة الإنجاز",cSub:"على مدار الساعة · ردّ فوري",cSend:"إرسال",cPh:"اكتب سؤالك…",
+  greet:"مرحباً! 👋 أهلاً بك في مدرسة الإنجاز الدولية الخاصة بمسقط. كيف يمكنني مساعدتك؟ اسأل عن القبول والرسوم والمنهج وبرنامج ذوي الاحتياجات الخاصة والنقل — أو احجز زيارة.",
+  q:{adm:"القبول",tour:"حجز زيارة",fees:"الرسوم",sen:"الاحتياجات الخاصة",transport:"النقل"},
+  kTeam:"خلف الكواليس",tTeam:"تعرّف على فريق التسويق بالذكاء الاصطناعي",lTeam:"خمسة وكلاء متخصصون بالذكاء الاصطناعي يبحثون ويديرون تسويقنا بتنسيق من مدير — بشكل مرئي للإدارة في تطبيق مباشر.",
+  team:[["🎯","مدير التسويق","يضع الاستراتيجية وينسّق الفريق ويجمع كل شيء في خطة واحدة."],
+   ["🔭","ذكاء السوق والمنافسين","يتابع سوق مسقط والمنافسين ويكتشف مواطن تميّزنا."],
+   ["📣","المحتوى والتواصل الاجتماعي","يروي قصتنا عبر إنستغرام وفيسبوك والواتساب والتطبيق — بلغتين."],
+   ["🤝","القبول وإدارة العلاقات","يجيب على كل استفسار بسرعة ويرافق العائلات من أول ترحيب حتى التسجيل."],
+   ["🔎","تحسين الظهور والتحليلات","يساعد العائلات في إيجادنا على غوغل ويقيس ما ينجح."],
+   ["🧠","عملٌ دائم وتعلّم مستمر","يعمل الفريق على مدار الساعة ويعرض الأداء مباشرة."]],
+  kWhy:"لماذا تختارنا العائلات",tWhy:"نقاط قوة حقيقية، معروضة بوضوح",lWhy:"ليست وعوداً — بل ما نقدّمه فعلاً، الآن في الواجهة.",
+  why:[["💰","كامبردج بأسعار ميسّرة","شهادات IGCSE وGED معترف بها عالمياً برسوم شفافة."],
+   ["💙","كل طفل مشمول","برنامج دمج للاحتياجات الخاصة بإشراف أخصائيين."],
+   ["🗣️","ثنائي اللغة بالتصميم","إتقان العربية والإنجليزية من الروضة حتى الصف الثاني عشر."],
+   ["📲","متابعة بالذكاء الاصطناعي","رؤية فورية لتقدّم طفلك في التعلّم."]],
+  facTitle:"في الحرم المدرسي بالعنسب:",
+  facs:["مختبر STEM","تعلّم بالواقع الافتراضي والآيباد","مختبر الرياضيات ثلاثي الأبعاد","مختبرات علوم","مسبح","قاعة مسرح","مكتبة","غرف دمج وعلاج","روضة مونتيسوري","اعتماد كامبردج وNSPSA"],
+  kVoices:"من عائلاتنا",tVoices:"استمعوا إلى أولياء أمورنا وشاهدوا الحياة المدرسية",
+  lVoices:"لحظات حقيقية من قنواتنا الرسمية — فعاليات وفصول وأصوات أولياء الأمور. شاهدوا، ثم تعالوا لتجربتها بأنفسكم.",
+  vNote:"مباشرة من قناتنا الرسمية على يوتيوب — تعمل المقاطع على الموقع المنشور.",
+  socials:[["▶  يوتيوب — مقاطع وفعاليات المدرسة","https://www.youtube.com/@alinjazschoolOM"],["📷  إنستغرام — الحياة المدرسية اليومية","https://www.instagram.com/alinjaz_oman/"],["👍  فيسبوك — قصص أولياء الأمور","https://www.facebook.com/AIIPSMuscat/"]],
+  tSample:"صوت ولي أمر",
+  testi:[{q:"\u201C[أدرجوا هنا اقتباساً حقيقياً لأحد أولياء الأمور من إنستغرام أو فيسبوك.]\u201D",w:"\u2014 [اسم ولي الأمر والصف]"},
+   {q:"\u201C[أضيفوا كلمات عائلة أخرى \u2014 مثلاً عن المعلمين أو دعم الدمج.]\u201D",w:"\u2014 [اسم ولي الأمر والصف]"},
+   {q:"\u201C[أضيفوا اقتباساً عن برنامج كامبردج الميسّر أو نظام متابعة التقدّم بالذكاء الاصطناعي.]\u201D",w:"\u2014 [اسم ولي الأمر والصف]"}],
+  tCap:"تصميم تجريبي \u2014 أدرجوا كلمات أولياء أموركم الحقيقية وروابط الريلز هنا، أو أرسلوها لنا لتضمين المنشورات بدقّة.",
+  kAud:"مصمّم للجميع",tAud:"شاهدها من زاويتك",lAud:"",
+  aud:[["👨‍👩‍👧","لأولياء الأمور","جرّب مدرسة تجيب فوراً، وتشمل كل طفل، وتعرض تقدّم طفلك بين يديك."],
+   ["🏛️","للإدارة","قدرة تسويقية كاملة ومنخفضة التكلفة بالذكاء الاصطناعي — استراتيجية ومحتوى وقبول وتحليلات في تطبيق واحد."],
+   ["🎓","للمدارس الأخرى","نموذج لكيفية ريادة مدرسة عُمانية بالجودة الميسّرة والدمج والذكاء الاصطناعي."]],
+  fPos:"تعليم كامبردج بأسعار ميسّرة مع دمج عالمي المستوى — وتعلّم معزّز بالذكاء الاصطناعي.",
+  fContact:"📍 العنسب، مسقط، سلطنة عُمان<br>📞 ٩٦٨+ ٢٤٥٨٥٢٩٩ &nbsp; 💬 واتساب ٩٦٨+ ٩٢٩٨٨٩٠٥<br>✉️ admissions@alinjaz.edu.om &nbsp; 🌐 alinjaz.edu.om",
+  fApp:"افتح تطبيق مركز التسويق",
+  fNote:"هذه صفحة عرض. تجيب تجربة خط المساعدة من قاعدة معرفة مدمجة لتعمل في أي متصفح؛ وداخل تطبيق Cowork تستخدم أيضاً الذكاء الاصطناعي المباشر."}
+};
+const FAQ={en:{
+ fees:"Our fees are among the most affordable for a Cambridge school in Muscat — roughly OMR 1,822-3,322 per year depending on the grade, plus registration. Tell me your child's grade and I'll confirm, or book a tour. 🎓",
+ admissions:"Admissions are open from KG to Grade 12: enquire → campus tour → application & assessment → offer. Share your child's grade and preferred start date and I'll guide you. Would you like to book a tour?",
+ tour:"We'd love to welcome you! 🏫 Visit our Al Ansab campus to see the labs, pool and classrooms. Share your name, your child's grade and a preferred time, or WhatsApp +968 92988905, and we'll confirm your tour.",
+ sen:"Yes — we have a dedicated, therapist-led special-needs and inclusion programme (speech, physiotherapy and occupational support). Every child is supported by specialists who care. 💙 Shall we arrange a meeting with our inclusion team?",
+ transport:"Yes, we offer school transport with GPS-tracked routes across Muscat (Ghubra, Azaiba, Bousher, Al Khoud, Al Hail, Mabela, Seeb and more). Share your area and I'll tell you the nearest route. 🚌",
+ def:"Thanks for your message! 😊 I can help with admissions, fees, curriculum, special-needs, transport, or booking a tour. WhatsApp +968 92988905 · admissions@alinjaz.edu.om. What would you like to know?"},
+ ar:{
+ fees:"رسومنا من بين الأكثر تيسيراً لمدرسة كامبردج في مسقط — تقريباً بين ١٬٨٢٢ و٣٬٣٢٢ ريالاً عُمانياً سنوياً حسب الصف، بالإضافة إلى رسوم التسجيل. أخبرني بصف طفلك وسأؤكّد، أو احجز زيارة. 🎓",
+ admissions:"القبول مفتوح من الروضة حتى الصف الثاني عشر: استفسار ← زيارة ← تقديم وتقييم ← قبول. شارك صف طفلك وتاريخ البدء وسأرشدك. هل ترغب بحجز زيارة؟",
+ tour:"يسعدنا استقبالك! 🏫 تفضّل بزيارة حرمنا في العنسب لرؤية المختبرات والمسبح والفصول. شارك اسمك وصف طفلك والوقت المناسب، أو واتساب ٩٦٨+ ٩٢٩٨٨٩٠٥، وسنؤكّد زيارتك.",
+ sen:"نعم — لدينا برنامج متخصص للاحتياجات الخاصة والدمج بإشراف أخصائيين (نطق وعلاج طبيعي ووظيفي). كل طفل يحظى برعاية متخصصة. 💙 هل نرتّب لقاءً مع فريق الدمج؟",
+ transport:"نعم، نوفّر نقلاً مدرسياً بمسارات مزوّدة بالتتبّع عبر مسقط (الغبرة، العذيبة، بوشر، الخوض، الحيل، المعبيلة، السيب وغيرها). أخبرني بمنطقتك وسأحدّد أقرب مسار. 🚌",
+ def:"شكراً لرسالتك! 😊 يمكنني المساعدة في القبول والرسوم والمنهج والاحتياجات الخاصة والنقل أو حجز زيارة. واتساب ٩٦٨+ ٩٢٩٨٨٩٠٥ · admissions@alinjaz.edu.om. كيف أخدمك؟"}};
+const QK=["adm","tour","fees","sen","transport"];
+const QTOPIC={adm:"admissions",tour:"tour",fees:"fees",sen:"sen",transport:"transport"};
+function el(id){return document.getElementById(id);}
+function render(){const d=D[lang];document.documentElement.dir=lang==='ar'?'rtl':'ltr';document.documentElement.lang=lang;
+ el('brand').innerHTML=d.brand;el('openApp').textContent=d.open;el('langBtn').textContent=d.lang;
+ el('hBadge').textContent=d.hBadge;el('hTitle').textContent=d.hTitle;el('hSub').textContent=d.hSub;el('hCta1').textContent=d.hCta1;el('hCta2').textContent=d.hCta2;
+ el('hChips').innerHTML=d.chips.map(c=>`<div class="chip"><b>${c[0]}</b>${c[1]}</div>`).join('');
+ el('kExp').textContent=d.kExp;el('tExp').textContent=d.tExp;el('lExp').textContent=d.lExp;
+ el('expPoints').innerHTML=d.expPoints.map(p=>`<div style="display:flex;gap:9px;margin:0 0 12px"><span style="color:${COL.teal};font-weight:800">✓</span><span style="font-size:14.5px;line-height:1.45">${p}</span></div>`).join('');
+ el('cTitle').textContent=d.cTitle;el('cSub').textContent=d.cSub;el('cSend').textContent=d.cSend;el('cInput').placeholder=d.cPh;
+ el('kTeam').textContent=d.kTeam;el('tTeam').textContent=d.tTeam;el('lTeam').textContent=d.lTeam;
+ const tc=[COL.gold,COL.teal,COL.navy,COL.green,COL.teal,COL.navy];
+ el('teamGrid').innerHTML=d.team.map((t,i)=>`<div class="card"><div class="ic" style="background:${tc[i%tc.length]}">${t[0]}</div><h3>${t[1]}</h3><p>${t[2]}</p></div>`).join('');
+ el('kWhy').textContent=d.kWhy;el('tWhy').textContent=d.tWhy;el('lWhy').textContent=d.lWhy;
+ const wc=[COL.gold,COL.teal,COL.navy,COL.green];
+ el('whyGrid').innerHTML=d.why.map((w,i)=>`<div class="card"><div class="ic" style="background:${wc[i%wc.length]}">${w[0]}</div><h3>${w[1]}</h3><p>${w[2]}</p></div>`).join('');
+ el('facTitle').textContent=d.facTitle;el('facWrap').innerHTML=d.facs.map(f=>`<span class="pill">${f}</span>`).join('');
+ el('kAud').textContent=d.kAud;el('tAud').textContent=d.tAud;el('lAud').textContent=d.lAud;
+ el('audGrid').innerHTML=d.aud.map(a=>`<div class="card"><div class="ic" style="background:${COL.navy}">${a[0]}</div><h3>${a[1]}</h3><p>${a[2]}</p></div>`).join('');
+ el('fPos').textContent=d.fPos;el('fContact').innerHTML=d.fContact;el('fApp').textContent=d.fApp;el('fNote').textContent=d.fNote;
+ el('kVoices').textContent=d.kVoices;el('tVoices').textContent=d.tVoices;el('lVoices').textContent=d.lVoices;el('vNote').textContent=d.vNote;
+ el('socialLinks').innerHTML=d.socials.map(x=>`<a href="${x[1]}" target="_blank" rel="noopener">${x[0]}</a>`).join('');
+ el('testis').innerHTML=d.testi.map(tt=>`<div class="tcard"><div class="ts">${d.tSample}</div><div class="q">${tt.q}</div><div class="w">${tt.w}</div></div>`).join('');
+ el('tCap').textContent=d.tCap;
+ chatReset();}
+function toggleLang(){lang=(lang==='ar'?'en':'ar');localStorage.setItem('aiinjaz_launch_lang',lang);render();}
+function addMsg(who,text){const b=el('cBody');const x=document.createElement('div');x.className='msg '+(who==='me'?'me':'bot');x.textContent=text;b.appendChild(x);b.scrollTop=b.scrollHeight;return x;}
+function renderQuick(){el('cQuick').innerHTML=QK.map(k=>`<button onclick="cq('${k}')">${D[lang].q[k]}</button>`).join('');}
+function chatReset(){el('cBody').innerHTML='';addMsg('bot',D[lang].greet);renderQuick();}
+function ans(topic,free){const F=FAQ[lang];if(topic&&F[topic])return F[topic];const x=(free||'').toLowerCase();
+ if(/fee|cost|price|رسوم|تكلف/.test(x))return F.fees;
+ if(/admiss|enrol|join|قبول|تسجيل|التحاق/.test(x))return F.admissions;
+ if(/tour|visit|زيار/.test(x))return F.tour;
+ if(/special|need|inclus|احتياج|دمج|توحد/.test(x))return F.sen;
+ if(/bus|transport|نقل|حافل/.test(x))return F.transport;
+ return F.def;}
+function cq(k){addMsg('me',D[lang].q[k]);const t=el('cBody');const typing=addMsg('bot','…');setTimeout(()=>{typing.textContent=ans(QTOPIC[k],null);},350);}
+function csend(){const i=el('cInput');const v=i.value.trim();if(!v)return;i.value='';addMsg('me',v);const typing=addMsg('bot','…');setTimeout(()=>{typing.textContent=ans(null,v);},350);}
+render();
+</script>
+</body>
+</html>

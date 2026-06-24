@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Al Injaz Marketing Command</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
+<style>
+:root{color-scheme:light;--navy:#0B3D5C;--navy2:#0e3149;--teal:#1B9AAA;--gold:#C8961E;--green:#2E7D52;--red:#B33A3A;--ink:#13262F;--grey:#5A6B73;--line:#E4EAEE;--bg:#F1F5F7;--card:#FFFFFF;}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Calibri,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+a{color:inherit}
+.app{display:flex;min-height:100vh}
+/* sidebar */
+.side{width:228px;background:var(--navy);color:#fff;flex-shrink:0;display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
+.brand{padding:18px 18px 12px;border-bottom:1px solid #14496a}
+.brand .k{font-size:10.5px;letter-spacing:2px;color:#8FCAD2;font-weight:700;text-transform:uppercase}
+.brand h1{font-family:Georgia,serif;font-size:18px;margin:4px 0 0;font-weight:700;line-height:1.2}
+.nav{padding:10px 10px;flex:1;overflow:auto}
+.nav button{width:100%;text-align:left;background:none;border:0;color:#CFE3E8;font:inherit;font-size:14px;padding:10px 12px;border-radius:9px;cursor:pointer;display:flex;align-items:center;gap:10px;margin:2px 0}
+.nav button .ic{width:18px;text-align:center}
+.nav button:hover{background:#114866}
+.nav button.active{background:var(--teal);color:#fff;font-weight:600}
+.sidefoot{padding:14px 16px;border-top:1px solid #14496a}
+.sidefoot .ts{display:flex;align-items:center;gap:12px}
+.sidefoot .num{font-family:Georgia,serif;font-size:26px;font-weight:700}
+.sidefoot .lab{font-size:10px;color:#8FCAD2;text-transform:uppercase;letter-spacing:1px}
+/* main */
+.main{flex:1;min-width:0}
+.topbar{background:#fff;border-bottom:1px solid var(--line);padding:16px 26px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:20}
+.topbar h2{margin:0;font-family:Georgia,serif;font-size:21px;color:var(--navy)}
+.topbar .sub{font-size:13px;color:var(--grey);margin-top:2px}
+.content{padding:24px 26px 70px;max-width:1120px}
+.view{display:none}.view.active{display:block}
+/* generic */
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.row{display:grid;gap:16px}
+.r2{grid-template-columns:1.1fr .9fr}.r3{grid-template-columns:repeat(3,1fr)}.r4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:880px){.r2,.r3,.r4{grid-template-columns:1fr}}
+.section-title{font-family:Georgia,serif;font-size:17px;color:var(--navy);margin:26px 0 12px;font-weight:700}
+.stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.stat .v{font-family:Georgia,serif;font-size:30px;font-weight:700;line-height:1}
+.stat .l{font-size:12px;color:var(--grey);margin-top:5px}
+.chartbox{position:relative;height:300px}
+.ring{display:flex;align-items:center;gap:12px}
+.ring svg{transform:rotate(-90deg)}
+/* agent cards */
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+@media(max-width:880px){.cards{grid-template-columns:1fr}}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.05);cursor:pointer;transition:transform .12s,box-shadow .12s}
+.card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.10)}
+.card .bar{height:6px}.card .body{padding:15px 17px}
+.card h4{margin:0;font-size:16px;color:var(--navy);font-family:Georgia,serif}
+.card .role{font-size:11.5px;color:var(--grey);margin-top:2px}
+.head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.perf{text-align:right;flex-shrink:0}.perf .pv{font-family:Georgia,serif;font-size:22px;font-weight:700;line-height:1}.perf .pl{font-size:9.5px;color:var(--grey);text-transform:uppercase}
+.headline{font-size:12.5px;margin:11px 0 9px;line-height:1.45;color:var(--ink)}
+.statusdot{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;padding:3px 10px;border-radius:12px}
+.s-on{background:#E7F4EC;color:#1f7a4d}.s-att{background:#FBF1D6;color:#9a6b08}.s-blk{background:#FBECEC;color:#b3392f}
+.mini{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}.tag{font-size:10.5px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:3px 8px;color:var(--grey)}
+/* modal */
+.overlay{position:fixed;inset:0;background:rgba(10,30,40,.55);display:none;align-items:flex-start;justify-content:center;padding:28px 16px;z-index:60;overflow:auto}
+.overlay.open{display:flex}
+.modal{background:#fff;border-radius:16px;max-width:780px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);overflow:hidden}
+.mhead{padding:20px 24px;color:#fff}.mhead h3{margin:0;font-family:Georgia,serif;font-size:22px}.mhead p{margin:4px 0 0;font-size:13px;opacity:.92}
+.closex{float:right;cursor:pointer;font-size:24px;color:#fff;opacity:.85;line-height:1}
+.mbody{padding:18px 24px;max-height:66vh;overflow:auto}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:14px;flex-wrap:wrap}
+.tab{padding:8px 13px;font-size:13px;font-weight:600;color:var(--grey);cursor:pointer;border-bottom:2px solid transparent}
+.tab.active{color:var(--navy);border-bottom-color:var(--teal)}
+.tabpane{display:none}.tabpane.active{display:block}
+.mbody h5{margin:14px 0 6px;color:var(--teal);font-size:11.5px;text-transform:uppercase;letter-spacing:1px}
+.mbody ul{margin:0 0 8px;padding-left:18px}.mbody li{margin:5px 0;font-size:13.5px;line-height:1.45}
+.kpi{margin:12px 0}.kpi .kl{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px}.kpi .kl b{color:var(--navy)}.kpi .kl .tg{color:var(--grey);font-size:12px}
+.kpi input[type=range]{width:100%}.kbar{height:8px;background:var(--line);border-radius:6px;overflow:hidden;margin-top:3px}.kbar i{display:block;height:100%;border-radius:6px}.kval{font-size:12px;color:var(--grey);margin-top:2px}
+.field{margin:10px 0}.field label{font-size:12px;font-weight:600;color:var(--navy);display:block;margin-bottom:5px}
+select,textarea,input[type=text]{width:100%;font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
+textarea{min-height:60px;resize:vertical}
+.btn{background:var(--teal);color:#fff;border:0;border-radius:8px;padding:9px 15px;font-weight:600;cursor:pointer;font-size:13px}
+.btn:hover{background:#157e8c}.btn.alt{background:var(--navy)}.btn.ghost{background:#fff;border:1px solid var(--line);color:var(--navy)}
+.sugg{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:9px 11px;margin-top:8px;font-size:13px}.sugg .when{font-size:11px;color:var(--grey);margin-bottom:2px}
+.aibox{background:#F3FAFB;border:1px solid #CDE8EC;border-radius:10px;padding:12px;margin-top:8px;font-size:13.5px;line-height:1.5;white-space:pre-wrap}
+.muted{color:var(--grey);font-size:13px}
+/* tasks */
+.kanban{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}@media(max-width:880px){.kanban{grid-template-columns:1fr}}
+.col{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;min-height:120px}
+.col h4{margin:0 0 10px;font-size:13px;color:var(--navy);text-transform:uppercase;letter-spacing:.5px}
+.task{background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:10px;margin-bottom:9px;font-size:13px}
+.task .meta{font-size:11px;color:var(--grey);margin-top:6px;display:flex;justify-content:space-between;align-items:center}
+.task .ag{font-weight:600}
+.task .acts button{font-size:11px;border:0;background:#fff;border:1px solid var(--line);border-radius:6px;padding:2px 7px;cursor:pointer;margin-left:4px}
+.addtask{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.addtask input{flex:1;min-width:180px}.addtask select{max-width:200px}
+/* facilities */
+.fcat{margin-bottom:8px}
+.facs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}@media(max-width:880px){.facs{grid-template-columns:1fr 1fr}}@media(max-width:560px){.facs{grid-template-columns:1fr}}
+.fac{background:#fff;border:1px solid var(--line);border-radius:11px;padding:13px 14px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.fac .fi{font-size:20px}.fac h5{margin:6px 0 3px;font-size:14px;color:var(--navy)}.fac p{margin:0;font-size:12px;color:var(--grey);line-height:1.4}
+.pill{display:inline-block;font-size:11px;font-weight:600;padding:3px 10px;border-radius:11px;background:#E7F4EC;color:#1f7a4d;margin:2px 4px 2px 0}
+/* timeline */
+.tl{border-left:2px solid var(--line);margin-left:8px;padding-left:16px}
+.tlitem{margin-bottom:14px;position:relative}.tlitem:before{content:"";position:absolute;left:-22px;top:3px;width:10px;height:10px;border-radius:50%;background:var(--teal)}
+.tlitem .when{font-size:11px;color:var(--grey)}.tlitem .txt{font-size:13.5px;margin-top:2px}
+.report{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px;margin-top:12px;white-space:pre-wrap;font-size:13.5px;line-height:1.55}
+.banner{background:linear-gradient(100deg,var(--navy),#12506f);color:#fff;border-radius:14px;padding:18px 22px;margin-bottom:18px}
+.banner b{color:#fff}.banner .pos{font-size:15px;line-height:1.5}
+.goals{margin-top:10px}.goals .g{display:inline-block;background:rgba(255,255,255,.14);border-radius:20px;padding:5px 13px;font-size:13px;font-weight:600;margin:4px 6px 0 0}
+.empty{color:var(--grey);font-size:13px;padding:8px 0}
+
+[dir=rtl] .nav button{text-align:right}
+[dir=rtl] .topbar,[dir=rtl] .addtask,[dir=rtl] .field{direction:rtl}
+[dir=rtl] .kl{direction:rtl}
+#chatFab{position:fixed;bottom:20px;right:20px;z-index:80;background:var(--teal);color:#fff;border:0;border-radius:30px;padding:13px 18px;font:inherit;font-weight:700;font-size:14px;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+#chatFab:hover{background:#157e8c}
+[dir=rtl] #chatFab{right:auto;left:20px}
+#chatPanel{position:fixed;bottom:84px;right:20px;width:362px;max-width:calc(100vw - 36px);height:530px;max-height:calc(100vh - 120px);background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.3);z-index:80;display:none;flex-direction:column;overflow:hidden}
+[dir=rtl] #chatPanel{right:auto;left:20px}
+#chatPanel.open{display:flex}
+.chathead{background:var(--navy);color:#fff;padding:13px 16px}
+.chathead .t{font-weight:700;font-family:Georgia,serif;font-size:16px}
+.chathead .s{font-size:11px;color:#9FD3DA;display:flex;align-items:center;gap:6px;margin-top:2px}
+.chathead .dot{width:8px;height:8px;border-radius:50%;background:#46d39a;display:inline-block}
+.chathead .x{float:right;cursor:pointer;font-size:22px;opacity:.85;line-height:1}
+[dir=rtl] .chathead .x{float:left}
+.chatbody{flex:1;overflow:auto;padding:14px;background:var(--bg);display:flex;flex-direction:column;gap:9px}
+.msg{max-width:86%;padding:9px 12px;border-radius:13px;font-size:13.5px;line-height:1.5;white-space:pre-wrap}
+.msg.bot{background:#fff;border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:4px}
+.msg.me{background:var(--teal);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+[dir=rtl] .msg.bot{align-self:flex-end}
+[dir=rtl] .msg.me{align-self:flex-start}
+.quick{display:flex;flex-wrap:wrap;gap:6px;padding:8px 12px;background:#fff;border-top:1px solid var(--line)}
+.quick button{font-size:12px;border:1px solid var(--line);background:var(--bg);border-radius:14px;padding:5px 11px;cursor:pointer;color:var(--navy)}
+.quick button:hover{background:#e9f3f4}
+.chatin{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--line);background:#fff}
+.chatin input{flex:1}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><div class="k">Al Injaz International</div><h1>Marketing Command</h1></div>
+    <nav class="nav" id="nav"></nav>
+    <div class="sidefoot"><div class="ts">
+      <svg width="54" height="54" viewBox="0 0 54 54"><circle cx="27" cy="27" r="22" fill="none" stroke="#1c4a64" stroke-width="7"/><circle id="ringArc" cx="27" cy="27" r="22" fill="none" stroke="#1B9AAA" stroke-width="7" stroke-linecap="round" stroke-dasharray="138" stroke-dashoffset="138"/></svg>
+      <div><div class="num" id="teamScore">0</div><div class="lab">Team performance</div></div>
+    </div></div>
+  </aside>
+  <main class="main">
+    <div class="topbar"><div><h2 id="vTitle">Overview</h2><div class="sub" id="vSub"></div></div>
+      <div style="display:flex;gap:8px"><button class="btn ghost" id="langBtn" onclick="toggleLang()">العربية</button><button class="btn ghost" id="resetBtn" onclick="resetData()">Reset data</button></div></div>
+    <div class="content">
+      <section class="view active" id="v-overview"></section>
+      <section class="view" id="v-agents"></section>
+      <section class="view" id="v-tasks"></section>
+      <section class="view" id="v-strategy"></section>
+      <section class="view" id="v-facilities"></section>
+      <section class="view" id="v-reports"></section>
+      <section class="view" id="v-activity"></section>
+    </div>
+  </main>
+</div>
+<div class="overlay" id="overlay"><div class="modal" id="modal"></div></div>
+<button id="chatFab" onclick="chatToggle()"><span id="chatFabT">💬 Helpline</span></button>
+<div id="chatPanel">
+  <div class="chathead"><span class="x" onclick="chatToggle()">×</span><div class="t" id="chatTitle">Al Injaz Helpline</div><div class="s"><span class="dot"></span><span id="chatSub">24/7 · we usually reply instantly</span></div></div>
+  <div class="chatbody" id="chatBody"></div>
+  <div class="quick" id="chatQuick"></div>
+  <div class="chatin"><input type="text" id="chatInput" placeholder="Type your question…" onkeydown="if(event.key==='Enter')chatSendInput()"><button class="btn" id="chatSendBtn" onclick="chatSendInput()">Send</button></div>
+</div>
+
+<script>
+const C={navy:"#0B3D5C",teal:"#1B9AAA",gold:"#C8961E",green:"#2E7D52",red:"#B33A3A",grey:"#5A6B73"};
+const AI=(window.cowork&&typeof window.cowork.askClaude==="function")?window.cowork.askClaude.bind(window.cowork):null;
+async function askAI(prompt){
+  if(!AI) return "[Live AI responses run when this app is open inside Cowork. Here is a structured prompt the agent would answer:]\n\n"+prompt;
+  try{const r=await AI(prompt,[]);
+    if(typeof r==="string")return r;
+    if(r&&r.text)return r.text;
+    if(r&&r.content&&r.content[0]&&r.content[0].text)return r.content[0].text;
+    return JSON.stringify(r);
+  }catch(e){return "Could not reach the AI service: "+e;}
+}
+const SCHOOL="Al Injaz International Private School, Al Ansab, Muscat. Cambridge IGCSE & GED bilingual (Arabic/English), KG-Grade 12. Affordable fees (~OMR 1,822-3,322). Therapist-led special-needs inclusion. AI Students Progress Tracker. Position: 'Affordable Cambridge education with world-class inclusion - and AI-powered learning.' Competitors: Dorat Al-Khaleej, Al-Ibdaa, MISO, British School Muscat, TAISM, Indian School Muscat. Known issues: brand fragmentation (two domains), stale app, weak local SEO, Al Ansab commute. Goals: admissions, awareness, retention. Moderate budget.";
+
+const AGENTS=[
+ {id:"director",name:"Marketing Director",role:"Orchestrates strategy & integrates the team",color:C.gold,director:true,
+  headline:"We hold a position no Muscat rival owns - now execute: merge the brand, fix the funnel, and tell the inclusion + AI story until every parent knows it.",
+  findings:["All four specialists converge on one message: affordable Cambridge + world-class inclusion + AI-powered learning.","Biggest single threat is Dorat Al-Khaleej - closest match, but can't match our AI + bilingual + lower-fee bundle.","Most damage is self-inflicted and fixable: brand fragmentation, stale app, weak follow-up.","Location (Al Ansab) is the structural risk - solved with a marketed, tracked bus network."],
+  actions:["Approve one canonical brand, domain & handle set this week.","Sequence: brand+funnel (30d) -> app+SEO (60d) -> campaign+events (90d).","Hold each agent to its KPIs; review this app weekly.","Green-light retention levers: loyalty/sibling discounts, bus network, teacher pay benchmark."],
+  deliverables:["Integrated marketing strategy & 30-60-90 roadmap","Weekly team performance review (this app)","Budget allocation across the four pillars","Decision log & approvals"],
+  kpis:[{l:"Strategy integrated & approved",t:"Sign-off",v:90},{l:"Overall admissions goal",t:"+40% enquiries",v:22},{l:"Brand consolidation done",t:"1 domain live",v:30},{l:"Weekly reviews run",t:"Every week",v:60}]},
+ {id:"intel",name:"Market & Competitor Intel",role:"Live competitive & demand intelligence",color:C.teal,
+  headline:"Dorat Al-Khaleej is the one school that can copy our inclusion story - so win now on the affordable bilingual Cambridge + AI bundle it can't match.",
+  findings:["AIIPS sits in an under-served affordable-Cambridge + bilingual band, below premium (BSM/TAISM) and above CBSE.","White space: no nearby rival pairs therapist-led inclusion WITH AI-powered learning at our price.","Biggest threat: Dorat Al-Khaleej (Cambridge + special-needs + multi-branch reach).","Local catchment skews price-sensitive and values bilingual Arabic/English.","Rivals lead on heritage/curriculum; few lead on measurable outcomes - our AI tracker is differentiated proof."],
+  actions:["Build live battlecards (Dorat first, then MISO, Al-Ibdaa) with verified fees + dated URLs.","Arm content/SEO with counter-messaging on price transparency & outcomes.","Run a catchment heat-map vs Dorat's branch locations for geo-targeting.","Stand up monthly competitor-watch + quarterly parent-sentiment sweep."],
+  deliverables:["Competitor battlecards (Dorat priority)","Positioning map + white-space brief","Catchment/demand heat-map","Monthly competitor digest"],
+  kpis:[{l:"Competitor briefings refreshed",t:"Monthly",v:30},{l:"Verified-fee coverage",t:"100% w/ source",v:40},{l:"Parent-sentiment sweeps",t:"Quarterly",v:20},{l:"Actionable insights to team",t:">=4 / month",v:35}]},
+ {id:"seo",name:"SEO, Web & Analytics",role:"Search visibility, conversion & reporting",color:C.navy,
+  headline:"Google sees two half-strength schools instead of one - merge to a single domain, own our Maps reviews, and build pages for what parents actually search.",
+  findings:["CONFIRMED LIVE: alinjaz.edu.om and alinjazschool.com serve byte-identical pages with no canonical/301 - Google splits ranking signals.","Name fragmentation (AIPS/AIIPS, mismatched FB handles) weakens brand & knowledge-panel trust.","Conversion friction: stale enquiry modals mixing AY 2023-24 & 2025-26; no analytics events.","Reviews/local-SEO gap: app last updated 2023 (~6 reviews); GBP under-optimised.","No pages for high-intent terms ('affordable IGCSE school Muscat', 'special needs school Oman')."],
+  actions:["Pick ONE canonical domain (alinjaz.edu.om); 301-redirect the other; unify name & handles.","Claim/optimise Google Business Profile + launch a parent review drive.","Build 3 keyword->landing pages with fees, proof, schema & a tracked CTA.","Replace the 2023 form; single clean form with GA4 events + UTM'd WhatsApp.","Stand up a monthly analytics dashboard."],
+  deliverables:["Keyword map + landing-page briefs","Domain-consolidation & technical-SEO checklist","Local-SEO + review-drive playbook","Monthly performance report"],
+  kpis:[{l:"Google reviews",t:"100+ at >=4.3*",v:15},{l:"Qualified enquiries",t:"+40% YoY",v:20},{l:"Local pack visibility",t:"Top-3 Maps + page-1",v:25},{l:"Enquiry-form conversion",t:">=3.5% (GA4)",v:20}]},
+ {id:"content",name:"Content & Social",role:"Storytelling: IG, FB, WhatsApp, app",color:C.gold,
+  headline:"We have the labs, the inclusion model and the AI tracker - now show them, in Arabic and English, until our story is the one every Muscat parent knows.",
+  findings:["Format mismatch: newsletters posted as Reels; IG follows only 12 accounts -> broadcast-only, near-zero community.","Proof assets hidden: STEM/VR/3D-maths labs, pool, accreditation, inclusion rarely shown.","The AI Students Progress Tracker is unique & ownable, yet unmarketed.","Bilingual demand unmet - single-language posting halves reach.","What resonates: real classrooms, real children (with consent), parent voices, affordability as value."],
+  actions:["Lock a weekly calendar of 4-5 posts mapped to the 4 pillars & funnel stages.","Reel themes: Inside Our Labs, Every Child Included, Meet the AI Tracker, Bilingual Day-in-the-Life, Parent Proof.","Bilingual by default: Arabic-first + English; burn Arabic captions on Reels.","Launch a WhatsApp Channel; move newsletters there as digests.","Build a 4-part AI Tracker series ending in 'Download the app'."],
+  deliverables:["Weekly content calendar (EN/AR)","Library of 5 Reel scripts","WhatsApp Channel launch kit","Bilingual caption & hashtag bank"],
+  kpis:[{l:"Posts/week & engagement",t:"4-5/wk, >=3%",v:30},{l:"Follower growth",t:"+15% / quarter",v:25},{l:"WhatsApp Channel subs",t:"500 in 90 days",v:10},{l:"Tour bookings from social",t:">=20 / month",v:20}]},
+ {id:"crm",name:"Admissions & CRM",role:"Enquiry funnel, nurture & retention",color:C.green,
+  headline:"Answer every enquiry in minutes and give every family a reason to stay - turning Al Ansab's commute into a bus route and inclusion into 25% conversion, 92% re-enrolment.",
+  findings:["Top-of-funnel leak: outdated mixed-year forms; no single CRM - leads scatter across WhatsApp/email/walk-ins.","Speed-to-lead failure: no instant acknowledgement or 24h follow-up - top cause of defection.","Commute is the #1 switching driver; without a visible bus solution even won leads churn.","Retention risk: thin reviews weaken trust; teacher-poaching breaks the continuity parents re-enrol for.","Affordability, inclusion & AI tracker absent from follow-up & re-enrolment messaging."],
+  actions:["One short bilingual enquiry form wired to CRM; auto-create a deal on submit.","Speed-to-lead: instant acknowledgement + human call <24h + 5-step nurture.","Standardise CRM stages with owner + next action on every lead.","Retention levers: sibling/loyalty discounts, early-bird re-enrolment, 'keep your teacher' continuity.","Promote a GPS-tracked bus network in every tour & re-enrolment touch."],
+  deliverables:["5-step bilingual follow-up sequence","CRM stage model + lost-reason taxonomy","Early-bird re-enrolment + discount sheet","Conversion dashboard"],
+  kpis:[{l:"Enquiry->admission conversion",t:">=25%",v:30},{l:"Re-enrolment rate",t:">=92%",v:60},{l:"Lead acknowledgement",t:"100% <5 min",v:25},{l:"Tour-to-enrolment",t:">=50%",v:35}]},
+];
+
+const FACILITIES=[
+ {cat:"Academic & STEM",icon:"🔬",items:[
+  ["STEM Lab","Hands-on science, technology, engineering & maths."],["VR Facilities","Immersive virtual-reality learning."],
+  ["iPad Facilities","1:1 device-supported lessons."],["Maths 3D Lab","3D models that make maths tangible."],
+  ["Digital Interactive Boards","Smart boards in classrooms."],["Senior & Junior Computer Labs","Two dedicated ICT suites."],
+  ["Biology / Physics / Chemistry Labs","Full science laboratory suite."],["New Library","Modern reading & research space."],
+  ["Auditorium","Performances, assemblies & events."],["Art & Music Rooms","Dedicated creative-arts spaces."]]},
+ {cat:"Inclusion & Care",icon:"🤝",items:[
+  ["Section for Special Needs","A dedicated inclusion programme."],["Physiotherapy Room","On-campus physiotherapy support."],
+  ["Learning Difficulties (LD) Room","Targeted learning support."],["Counselling Room","Student wellbeing & guidance."],
+  ["Vocational Education","Life & work skills for special-needs students."],["Sick Bay","On-site health care."]]},
+ {cat:"Sport & Life",icon:"🏊",items:[
+  ["Swimming Pool","Swimming lessons & galas."],["Gymnasium","Indoor sport & PE."],
+  ["Assembly Ground","Outdoor assembly & play."],["Children's Play Area","Safe early-years play."],
+  ["KG Classrooms (Montessori)","Nurturing early-years rooms."],["Activity Room & Canteen","Clubs and dining."]]},
+ {cat:"Programmes & Credibility",icon:"🎓",items:[
+  ["Cambridge IGCSE & GED","Internationally recognised pathways."],["Bilingual (Arabic-English)","Two languages, KG-Grade 12."],
+  ["Cambridge International","Accredited Cambridge school."],["NSPSA Accreditation","Quality-assured provision."],
+  ["AI Students Progress Tracker","AI-powered, real-time progress for parents."],["School App & Parent Portal","Daily school in parents' hands."],
+  ["360° Virtual Tour","Explore the campus online."]]},
+];
+
+const STRATEGY={
+ position:"Affordable Cambridge education with world-class inclusion - and AI-powered learning.",
+ pillars:[["Affordable excellence","Recognised Cambridge qualifications at honest, transparent fees."],
+  ["Every child included","Therapist-led special-needs support built into the school."],
+  ["Bilingual by design","Confident in Arabic and English, ready for Oman and the world."],
+  ["One journey, KG-12","Stability and continuity for the whole school life."]],
+ phases:[["Days 1-30 - Stop the leaks","Consolidate brand/domain/handles; rewrite homepage around facilities + AI tracker; fix enquiry form + 24h follow-up; launch review drive & content calendar."],
+  ["Days 31-60 - Build the engine","Relaunch app with AI tracker as hero; facilities & inclusion Reels; optimise Google Business Profile; parent WhatsApp Channel."],
+  ["Days 61-90 - Press the advantage","Live bus tracking; keyword landing pages; open day with AI-tracker demo; measure the funnel and report."]]
+};
+
+/* ---------- state ---------- */
+const LS="aiinjaz_app_v1";
+let state=JSON.parse(localStorage.getItem(LS)||"{}");
+state.kpi=state.kpi||{};state.status=state.status||{};state.sugg=state.sugg||{};
+state.tasks=state.tasks||[];state.activity=state.activity||[];state.reports=state.reports||[];state.notes=state.notes||"";
+function save(){localStorage.setItem(LS,JSON.stringify(state));}
+function logAct(text){state.activity.push({when:new Date().toLocaleString(),text});save();}
+function kpiVal(aid,i){const a=AGENTS.find(x=>x.id===aid);return (state.kpi[aid]&&state.kpi[aid][i]!=null)?state.kpi[aid][i]:a.kpis[i].v;}
+function agentPerf(a){let s=0;a.kpis.forEach((k,i)=>s+=kpiVal(a.id,i));return Math.round(s/a.kpis.length);}
+function teamPerf(){const sp=AGENTS.filter(a=>!a.director);let s=0;sp.forEach(a=>s+=agentPerf(a));return Math.round(s/sp.length);}
+function statusOf(aid){return state.status[aid]||(aid==="director"?"on":"att");}
+const SLAB={on:["On track","s-on"],att:["Needs attention","s-att"],blk:["Blocked","s-blk"]};
+function colorFor(v){return v>=70?C.green:v>=45?C.gold:C.red;}
+function esc(s){return (s||"").replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));}
+
+/* ---------- nav / router ---------- */
+const VIEWS=[["overview","Overview","📊","Team performance & headlines"],["agents","Agents","🧠","Five specialists - review & task them"],
+ ["tasks","Task board","✅","Assign and track work across the team"],["strategy","Strategy","🎯","The integrated plan & 30-60-90 roadmap"],
+ ["facilities","Facilities & Assets","🏫","Everything the school can market"],["reports","Reports","📝","Generate board-ready reviews"],
+ ["activity","Activity log","🕑","Everything that has happened"]];
+function buildNav(){document.getElementById("nav").innerHTML=VIEWS.map(v=>`<button data-v="${v[0]}" onclick="go('${v[0]}')"><span class="ic">${v[2]}</span>${L(v[0],0)}</button>`).join("");}
+let cur="overview";
+function go(v){cur=v;document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"));document.getElementById("v-"+v).classList.add("active");
+ document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("active",b.dataset.v===v));
+ document.getElementById("vTitle").textContent=L(v,0);document.getElementById("vSub").textContent=L(v,1);
+ render(v);window.scrollTo(0,0);}
+
+/* ---------- renderers ---------- */
+let radar;
+function renderSidebar(){const tp=teamPerf();document.getElementById("teamScore").textContent=tp;
+ const arc=document.getElementById("ringArc");const circ=138;arc.style.strokeDashoffset=circ-(circ*tp/100);}
+
+function render(v){renderSidebar();
+ if(v==="overview")renderOverview();
+ if(v==="agents")renderAgents();
+ if(v==="tasks")renderTasks();
+ if(v==="strategy")renderStrategy();
+ if(v==="facilities")renderFacilities();
+ if(v==="reports")renderReports();
+ if(v==="activity")renderActivity();}
+
+function renderOverview(){
+ const sp=AGENTS.filter(a=>!a.director);const tp=teamPerf();
+ const openTasks=state.tasks.filter(t=>t.status!=="done").length;
+ const facCount=FACILITIES.reduce((n,c)=>n+c.items.length,0);
+ const el=document.getElementById("v-overview");
+ el.innerHTML=`
+ <div class="banner"><div class="pos"><b>${t('position_lbl')}</b> ${STRATEGY.position}</div>
+  <div class="goals"><span class="g">${t('goal_adm')}</span><span class="g">${t('goal_aw')}</span><span class="g">${t('goal_ret')}</span></div></div>
+ <div class="row r4">
+   <div class="stat"><div class="v" style="color:${colorFor(tp)}">${tp}%</div><div class="l">${t('st_team')}</div></div>
+   <div class="stat"><div class="v">${sp.length+1}</div><div class="l">${t('st_agents')}</div></div>
+   <div class="stat"><div class="v">${openTasks}</div><div class="l">${t('st_tasks')}</div></div>
+   <div class="stat"><div class="v">${facCount}</div><div class="l">${t('st_fac')}</div></div>
+ </div>
+ <div class="panel" style="margin-top:18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+   <button class="btn" onclick="genTeamSuggestions()">${t('gen_team')}</button>
+   <span id="teamSugBusy" class="muted"></span>
+   <div id="teamSugOut" style="flex-basis:100%"></div>
+ </div>
+ <div class="row r2" style="margin-top:18px">
+   <div class="panel"><h3 style="margin:0 0 10px;color:var(--navy)">${t('ov_radar')}</h3><div class="chartbox"><canvas id="radar"></canvas></div></div>
+   <div class="panel"><h3 style="margin:0 0 10px;color:var(--navy)">${t('ov_head')}</h3><div id="headlines"></div></div>
+ </div>`;
+ document.getElementById("headlines").innerHTML=sp.map(a=>`<div style="display:flex;gap:9px;margin:10px 0;font-size:12.5px;line-height:1.45"><span style="flex-shrink:0;width:9px;height:9px;border-radius:50%;background:${a.color};margin-top:4px"></span><span><b style="color:${C.navy}">${a.name}:</b> ${esc(a.headline)}</span></div>`).join("");
+ const data={labels:sp.map(a=>a.name.split(" ")[0]),datasets:[{data:sp.map(a=>agentPerf(a)),fill:true,backgroundColor:"rgba(27,154,170,.18)",borderColor:C.teal,pointBackgroundColor:sp.map(a=>a.color),pointRadius:5}]};
+ const opts={responsive:true,maintainAspectRatio:false,scales:{r:{min:0,max:100,ticks:{stepSize:25,color:"#9aa",backdropColor:"transparent"},grid:{color:"#E4EAEE"},angleLines:{color:"#E4EAEE"},pointLabels:{font:{size:12},color:C.navy}}},plugins:{legend:{display:false}}};
+ if(radar){try{radar.destroy()}catch(e){}}
+ radar=new Chart(document.getElementById("radar"),{type:"radar",data,options:opts});
+}
+
+function renderAgents(){
+ document.getElementById("v-agents").innerHTML=`<div class="cards">`+AGENTS.map(a=>{
+  const p=agentPerf(a);const st=SLAB[statusOf(a.id)];
+  return `<div class="card" onclick="openAgent('${a.id}')"><div class="bar" style="background:${a.color}"></div><div class="body">
+    <div class="head"><div><h4>${a.name}</h4><div class="role">${a.role}</div></div>
+    <div class="perf"><div class="pv" style="color:${colorFor(p)}">${p}<span style="font-size:12px">%</span></div><div class="pl">perf</div></div></div>
+    <div class="headline">${esc(a.headline)}</div>
+    <span class="statusdot ${st[1]}">● ${st[0]}</span>
+    <div class="mini">${a.kpis.slice(0,3).map(k=>`<span class="tag">${esc(k.l)}</span>`).join("")}</div>
+   </div></div>`;}).join("")+`</div>`;
+}
+
+function renderTasks(){
+ const cols=[["todo","To do"],["doing","In progress"],["done","Done"]];
+ const agOpts=AGENTS.map(a=>`<option value="${a.id}">${a.name}</option>`).join("");
+ let html=`<div class="addtask">
+   <input type="text" id="ntTitle" placeholder="New task, e.g. Build Dorat Al-Khaleej battlecard">
+   <select id="ntAgent">${agOpts}</select>
+   <button class="btn" onclick="addTask()">Add task</button></div>
+   <div class="kanban">`;
+ cols.forEach(c=>{const list=state.tasks.filter(t=>t.status===c[0]);
+   html+=`<div class="col"><h4>${c[1]} (${list.length})</h4>`+
+    (list.length?list.map(t=>{const a=AGENTS.find(x=>x.id===t.agent)||{name:"?",color:C.grey};
+     return `<div class="task">${esc(t.title)}<div class="meta"><span class="ag" style="color:${a.color}">${a.name}</span>
+       <span class="acts">${t.status!=="todo"?`<button onclick="moveTask('${t.id}','back')">‹</button>`:""}${t.status!=="done"?`<button onclick="moveTask('${t.id}','fwd')">→ next</button>`:""}<button onclick="delTask('${t.id}')">✕</button></span></div></div>`;}).join(""):`<div class="empty">Nothing here yet.</div>`)
+    +`</div>`;});
+ html+=`</div>`;
+ document.getElementById("v-tasks").innerHTML=html;
+}
+function addTask(){const t=document.getElementById("ntTitle").value.trim();const ag=document.getElementById("ntAgent").value;if(!t)return;
+ state.tasks.push({id:"t"+Date.now(),title:t,agent:ag,status:"todo"});logAct(`Task created: "${t}" → ${AGENTS.find(a=>a.id===ag).name}`);save();renderTasks();}
+function moveTask(id,dir){const t=state.tasks.find(x=>x.id===id);if(!t)return;const order=["todo","doing","done"];let i=order.indexOf(t.status);i+=dir==="fwd"?1:-1;i=Math.max(0,Math.min(2,i));t.status=order[i];logAct(`Task "${t.title}" moved to ${t.status}`);save();renderTasks();}
+function delTask(id){const t=state.tasks.find(x=>x.id===id);state.tasks=state.tasks.filter(x=>x.id!==id);if(t)logAct(`Task removed: "${t.title}"`);save();renderTasks();}
+
+function renderStrategy(){
+ let html=`<div class="banner"><div class="pos"><b>Position:</b> ${STRATEGY.position}</div></div>
+  <div class="section-title">Messaging pillars</div><div class="row r4">`+
+  STRATEGY.pillars.map(p=>`<div class="panel"><h3 style="margin:0 0 6px;color:var(--navy);font-size:15px">${p[0]}</h3><p class="muted" style="margin:0">${p[1]}</p></div>`).join("")+`</div>
+  <div class="section-title">30-60-90 day roadmap</div><div class="row r3">`+
+  STRATEGY.phases.map((p,i)=>`<div class="panel"><h3 style="margin:0 0 6px;color:${[C.navy,C.teal,C.gold][i]};font-size:15px">${p[0]}</h3><p class="muted" style="margin:0">${p[1]}</p></div>`).join("")+`</div>
+  <div class="section-title">Director's strategic notes</div>
+  <div class="panel"><textarea id="dirNotes" style="min-height:120px" placeholder="Add your own strategic notes, decisions, or priorities here...">${esc(state.notes)}</textarea>
+   <div style="margin-top:10px"><button class="btn" onclick="saveNotes()">Save notes</button></div></div>`;
+ document.getElementById("v-strategy").innerHTML=html;
+}
+function saveNotes(){state.notes=document.getElementById("dirNotes").value;logAct("Director updated strategic notes");save();alert("Notes saved.");}
+
+function renderFacilities(){
+ const total=FACILITIES.reduce((n,c)=>n+c.items.length,0);
+ let html=`<div class="panel" style="margin-bottom:16px"><b style="color:var(--navy)">${total} marketable facilities & assets</b> <span class="muted">— the proof points the marketing team should lead with. Currently under-used in marketing.</span></div>`;
+ FACILITIES.forEach(c=>{html+=`<div class="section-title">${c.icon} ${c.cat}</div><div class="facs">`+
+  c.items.map(it=>`<div class="fac"><div class="fi">${c.icon}</div><h5>${it[0]}</h5><p>${it[1]}</p></div>`).join("")+`</div>`;});
+ document.getElementById("v-facilities").innerHTML=html;
+}
+
+function renderReports(){
+ let html=`<div class="panel"><h3 style="margin:0 0 8px;color:var(--navy)">Generate a board-ready review</h3>
+  <p class="muted" style="margin:0 0 12px">The Director compiles current performance, statuses and open tasks into a short written review.</p>
+  <button class="btn" onclick="genReport()">Generate weekly review</button> <span id="repBusy" class="muted"></span>
+  <div id="repOut"></div></div>
+  <div class="section-title">Saved reports</div>`;
+ html+= state.reports.length? state.reports.slice().reverse().map(r=>`<div class="report"><div class="muted" style="margin-bottom:6px">${r.when}</div>${esc(r.text)}</div>`).join("") : `<div class="empty">No saved reports yet.</div>`;
+ document.getElementById("v-reports").innerHTML=html;
+}
+async function genReport(){
+ document.getElementById("repBusy").textContent="Generating…";
+ const lines=AGENTS.map(a=>`${a.name}: ${agentPerf(a)}% performance, status ${SLAB[statusOf(a.id)][0]}. Headline: ${a.headline}`).join("\n");
+ const tasks=state.tasks.map(t=>`- [${t.status}] ${t.title} (${(AGENTS.find(a=>a.id===t.agent)||{}).name})`).join("\n")||"none";
+ const prompt=`You are the Marketing Director of ${SCHOOL}\n\nWrite a concise weekly board review (180-230 words) of the AI marketing team. Use the data below. Structure: (1) one-line team health verdict with the team score ${teamPerf()}%, (2) what's progressing, (3) what needs attention, (4) the single priority for next week. Be specific and plain.\n\nAGENT STATUS:\n${lines}\n\nTASKS:\n${tasks}`;
+ const out=await askAI(prompt);
+ state.reports.push({when:new Date().toLocaleString(),text:out});logAct("Generated weekly board review");save();
+ document.getElementById("repBusy").textContent="";renderReports();
+}
+
+function renderActivity(){
+ const html= state.activity.length? `<div class="tl">`+state.activity.slice().reverse().map(a=>`<div class="tlitem"><div class="when">${a.when}</div><div class="txt">${esc(a.text)}</div></div>`).join("")+`</div>` : `<div class="empty">No activity yet. Update a KPI, post a suggestion, or add a task.</div>`;
+ document.getElementById("v-activity").innerHTML=html;
+}
+
+/* ---------- agent modal ---------- */
+function openAgent(aid){
+ const a=AGENTS.find(x=>x.id===aid);const st=statusOf(aid);
+ const m=document.getElementById("modal");
+ m.innerHTML=`<div class="mhead" style="background:${a.color}"><span class="closex" onclick="closeM()">×</span>
+   <h3>${a.name}</h3><p>${a.role} · performance ${agentPerf(a)}%</p></div>
+  <div class="mbody">
+   <div class="tabs">
+     <div class="tab active" data-t="work" onclick="setTab('work')">Findings & Actions</div>
+     <div class="tab" data-t="deliv" onclick="setTab('deliv')">Deliverables</div>
+     <div class="tab" data-t="kpi" onclick="setTab('kpi')">KPIs</div>
+     <div class="tab" data-t="ask" onclick="setTab('ask')">Ask this agent</div>
+     <div class="tab" data-t="dir" onclick="setTab('dir')">Status & suggestions</div>
+   </div>
+   <div class="tabpane active" id="p-work"><h5>Headline</h5><p style="font-size:14px">${esc(a.headline)}</p>
+     <h5>Key findings</h5><ul>${a.findings.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
+     <h5>Recommended actions</h5><ul>${a.actions.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>
+   <div class="tabpane" id="p-deliv"><h5>What this agent produces</h5><ul>${a.deliverables.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>
+   <div class="tabpane" id="p-kpi"><h5>Drag to update actual progress toward each target</h5>
+     ${a.kpis.map((k,i)=>{const v=kpiVal(aid,i);return `<div class="kpi"><div class="kl"><b>${esc(k.l)}</b><span class="tg">target: ${esc(k.t)}</span></div>
+       <input type="range" min="0" max="100" value="${v}" oninput="setKpi('${aid}',${i},this.value)">
+       <div class="kbar"><i id="kb-${aid}-${i}" style="width:${v}%;background:${colorFor(v)}"></i></div>
+       <div class="kval" id="kv-${aid}-${i}">${v}% toward target</div></div>`;}).join("")}</div>
+   <div class="tabpane" id="p-ask"><h5>Give this agent a live instruction</h5>
+     <div class="field"><textarea id="askbox" placeholder="Write an instruction, or generate one with AI"></textarea></div>
+     <button class="btn ghost" onclick="genAsk('${aid}')">✨ Suggest a question</button>
+     <button class="btn" onclick="runAsk('${aid}')">Ask ${a.name.split(' ')[0]}</button> <span id="askBusy" class="muted"></span>
+     <div id="askOut"></div></div>
+   <div class="tabpane" id="p-dir">
+     <div class="field"><label>Agent status</label>
+       <select onchange="setStatus('${aid}',this.value)">
+        <option value="on" ${st==='on'?'selected':''}>On track</option>
+        <option value="att" ${st==='att'?'selected':''}>Needs attention</option>
+        <option value="blk" ${st==='blk'?'selected':''}>Blocked</option></select></div>
+     <div class="field"><label>Post a suggestion / instruction</label>
+       <textarea id="sg-${aid}" placeholder="Write a suggestion, or generate one with AI"></textarea>
+       <div style="margin-top:8px"><button class="btn ghost" onclick="genSugg('${aid}')">✨ Generate suggestion</button> <button class="btn" onclick="addSugg('${aid}')">Post suggestion</button> <span id="sgBusy-${aid}" class="muted"></span></div></div>
+     <div id="sglist-${aid}">${renderSugg(aid)}</div></div>
+  </div>`;
+ document.getElementById("overlay").classList.add("open");
+}
+function setTab(t){document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.t===t));
+ document.querySelectorAll('.tabpane').forEach(p=>p.classList.remove('active'));document.getElementById('p-'+t).classList.add('active');}
+function closeM(){document.getElementById("overlay").classList.remove("open");}
+document.getElementById("overlay").addEventListener("click",e=>{if(e.target.id==="overlay")closeM();});
+function setKpi(aid,i,v){v=+v;state.kpi[aid]=state.kpi[aid]||{};state.kpi[aid][i]=v;save();
+ document.getElementById('kb-'+aid+'-'+i).style.width=v+'%';document.getElementById('kb-'+aid+'-'+i).style.background=colorFor(v);
+ document.getElementById('kv-'+aid+'-'+i).textContent=v+'% toward target';renderSidebar();}
+function setStatus(aid,v){state.status[aid]=v;logAct(`${AGENTS.find(a=>a.id===aid).name} status set to "${SLAB[v][0]}"`);save();}
+function renderSugg(aid){const l=state.sugg[aid]||[];if(!l.length)return '<div class="empty">No suggestions yet.</div>';
+ return l.slice().reverse().map(s=>`<div class="sugg"><div class="when">${s.when}</div>${esc(s.txt)}</div>`).join("");}
+function addSugg(aid){const ta=document.getElementById('sg-'+aid);const t=ta.value.trim();if(!t)return;
+ state.sugg[aid]=state.sugg[aid]||[];state.sugg[aid].push({txt:t,when:new Date().toLocaleString()});logAct(`Suggestion to ${AGENTS.find(a=>a.id===aid).name}: "${t}"`);save();ta.value="";
+ document.getElementById('sglist-'+aid).innerHTML=renderSugg(aid);}
+async function runAsk(aid){const a=AGENTS.find(x=>x.id===aid);const q=document.getElementById('askbox').value.trim();if(!q)return;
+ document.getElementById('askBusy').textContent='Thinking…';
+ const prompt=`You are the "${a.name}" for ${SCHOOL}\nYour role: ${a.role}. Your priorities: ${a.actions.join('; ')}.\nThe Marketing Director asks: "${q}"\nRespond concisely and practically, on-brand, ready to use.`;
+ const out=await askAI(prompt);
+ document.getElementById('askBusy').textContent='';
+ document.getElementById('askOut').innerHTML=`<div class="aibox">${esc(out)}</div>`;
+ logAct(`Asked ${a.name}: "${q}"`);save();
+}
+async function genAsk(aid){const a=AGENTS.find(x=>x.id===aid);const busy=document.getElementById('askBusy');if(busy)busy.textContent='Generating…';
+ const prompt=`You are the Marketing Director of ${SCHOOL}\nPropose ONE concrete, high-value task or question (max 30 words) to give your "${a.name}" (role: ${a.role}; priorities: ${a.actions.join('; ')}). Output only the question text, no preamble or quotes.`;
+ const out=await askAI(prompt);if(busy)busy.textContent='';const ta=document.getElementById('askbox');if(ta)ta.value=String(out).trim();}
+async function genSugg(aid){const a=AGENTS.find(x=>x.id===aid);const busy=document.getElementById('sgBusy-'+aid);if(busy)busy.textContent='Generating…';
+ const ranked=a.kpis.map((k,i)=>({k,v:kpiVal(aid,i)})).sort((x,y)=>x.v-y.v)[0];
+ const prompt=`You are the Marketing Director of ${SCHOOL}\nWrite ONE specific, actionable suggestion (max 40 words) for your "${a.name}" (role: ${a.role}). Current performance ${agentPerf(a)}%, status ${SLAB[statusOf(aid)][0]}, weakest KPI "${ranked.k.l}" at ${ranked.v}% toward target "${ranked.k.t}". Anchor it in their priorities: ${a.actions.join('; ')}. Output only the suggestion text, no preamble or quotes.`;
+ const out=await askAI(prompt);if(busy)busy.textContent='';const ta=document.getElementById('sg-'+aid);if(ta)ta.value=String(out).trim();}
+async function genTeamSuggestions(){
+ const sp=AGENTS.filter(a=>!a.director);
+ const busy=document.getElementById('teamSugBusy');const out=document.getElementById('teamSugOut');
+ if(out)out.innerHTML='';let done=0;
+ for(const a of sp){
+   if(busy)busy.textContent='Generating '+(done+1)+'/'+sp.length+': '+a.name+'…';
+   const ranked=a.kpis.map((k,i)=>({k,v:kpiVal(a.id,i)})).sort((x,y)=>x.v-y.v)[0];
+   const prompt=`You are the Marketing Director of ${SCHOOL}\nWrite ONE specific, actionable suggestion (max 40 words) for your "${a.name}" (role: ${a.role}). Current performance ${agentPerf(a)}%, status ${SLAB[statusOf(a.id)][0]}, weakest KPI "${ranked.k.l}" at ${ranked.v}% toward target "${ranked.k.t}". Anchor it in their priorities: ${a.actions.join('; ')}. Output only the suggestion text, no preamble or quotes.`;
+   const sug=String(await askAI(prompt)).trim();
+   state.sugg[a.id]=state.sugg[a.id]||[];state.sugg[a.id].push({txt:sug,when:new Date().toLocaleString()});
+   logAct(`AI suggestion drafted & posted to ${a.name}`);save();done++;
+   if(out)out.innerHTML+=`<div class="sugg"><div class="when" style="color:${a.color};font-weight:600">${a.name}</div>${esc(sug)}</div>`;
+ }
+ if(busy)busy.textContent=`Done — ${sp.length} suggestions posted to each agent (see their Status & suggestions tab).`;
+}
+function resetData(){if(confirm("Reset all KPI updates, tasks, suggestions, notes and reports?")){localStorage.removeItem(LS);state={kpi:{},status:{},sugg:{},tasks:[],activity:[],reports:[],notes:""};render(cur);renderSidebar();}}
+
+
+/* ===== i18n + 24/7 chat helpline ===== */
+let lang=localStorage.getItem('aiinjaz_lang')||'en';
+const T={en:{position_lbl:"Position:",goal_adm:"🎯 Grow admissions",goal_aw:"📣 Build awareness",goal_ret:"🤝 Strengthen retention",
+ st_team:"Team performance",st_agents:"AI agents working",st_tasks:"Open tasks",st_fac:"Facilities to market",
+ ov_radar:"Agent performance radar",ov_head:"Headline reads from the team",gen_team:"✨ Generate suggestions for the whole team",reset:"Reset data",
+ chat_fab:"💬 Helpline",chat_title:"Al Injaz Helpline",chat_sub:"24/7 · we usually reply instantly",chat_ph:"Type your question…",chat_send:"Send",
+ chat_greet:"Hello! 👋 Welcome to Al Injaz International School, Muscat. How can I help today? Ask me about admissions, fees, the curriculum, our special-needs programme, transport — or book a tour.",
+ q_adm:"Admissions",q_tour:"Book a tour",q_fees:"Fees",q_sen:"Special needs",q_bus:"Transport"},
+ ar:{position_lbl:"التوجّه:",goal_adm:"🎯 زيادة التسجيل",goal_aw:"📣 بناء الوعي",goal_ret:"🤝 تعزيز الاستبقاء",
+ st_team:"أداء الفريق",st_agents:"وكلاء الذكاء الاصطناعي",st_tasks:"المهام المفتوحة",st_fac:"المرافق للتسويق",
+ ov_radar:"رادار أداء الوكلاء",ov_head:"أبرز ملاحظات الفريق",gen_team:"✨ إنشاء اقتراحات لكامل الفريق",reset:"إعادة التعيين",
+ chat_fab:"💬 المساعدة",chat_title:"خط مساعدة الإنجاز",chat_sub:"على مدار الساعة · نردّ عادةً فوراً",chat_ph:"اكتب سؤالك…",chat_send:"إرسال",
+ chat_greet:"مرحباً! 👋 أهلاً بك في مدرسة الإنجاز الدولية الخاصة بمسقط. كيف يمكنني مساعدتك؟ اسأل عن القبول والرسوم والمنهج وبرنامج ذوي الاحتياجات الخاصة والنقل — أو احجز زيارة.",
+ q_adm:"القبول",q_tour:"حجز زيارة",q_fees:"الرسوم",q_sen:"الاحتياجات الخاصة",q_bus:"النقل"}};
+function t(k){return (T[lang]&&T[lang][k])||T.en[k]||k;}
+function L(id,w){const ar={overview:["نظرة عامة","أداء الفريق والعناوين"],agents:["الوكلاء","خمسة متخصصين — راجِع ووجّه"],tasks:["لوحة المهام","توزيع المهام ومتابعتها"],strategy:["الاستراتيجية","الخطة المتكاملة وخارطة الطريق"],facilities:["المرافق والمزايا","كل ما يمكن للمدرسة تسويقه"],reports:["التقارير","إنشاء مراجعات جاهزة للإدارة"],activity:["سجل النشاط","كل ما حدث"]};
+ const v=VIEWS.find(x=>x[0]===id);return lang==='ar'?(ar[id]?ar[id][w]:(w===0?v[1]:v[3])):(w===0?v[1]:v[3]);}
+const FAQ={en:{
+ fees:"Our fees are among the most affordable for a Cambridge school in Muscat — roughly OMR 1,822-3,322 per year depending on the grade, plus registration. Tell me your child's grade and I'll confirm the exact figure, or you can book a tour. 🎓",
+ admissions:"Admissions are open from KG to Grade 12. It's simple: enquire, then a campus tour, then application & assessment, then your offer. Share your child's grade and preferred start date and I'll guide you. Would you like to book a tour?",
+ tour:"We'd love to welcome you! 🏫 Visit our Al Ansab campus to see the labs, pool and classrooms. Share your name, your child's grade and a preferred day/time, or message us on WhatsApp +968 92988905, and we'll confirm your tour.",
+ sen:"Yes - we have a dedicated, therapist-led special-needs and inclusion programme (speech, physiotherapy and occupational support). Every child is supported by specialists who care. Tell me a little about your child and we'll arrange a meeting with our inclusion team. 💙",
+ transport:"Yes, we offer school transport and are expanding GPS-tracked bus routes across Muscat (Ghubra, Azaiba, Bousher, Al Khoud, Al Hail, Mabela, Seeb and more). Share your area and I'll tell you the nearest route and pickup point. 🚌",
+ default:"Thanks for your message! 😊 I can help with admissions, fees, the curriculum, our special-needs programme, transport, or booking a tour. You can also reach us on WhatsApp +968 92988905 or admissions@alinjaz.edu.om. What would you like to know?"},
+ ar:{
+ fees:"رسومنا من بين الأكثر تيسيراً لمدرسة كامبردج في مسقط — تقريباً بين ١٬٨٢٢ و٣٬٣٢٢ ريالاً عُمانياً سنوياً حسب الصف، بالإضافة إلى رسوم التسجيل. أخبرني بصف طفلك وسأؤكّد الرقم الدقيق، أو يمكنك حجز زيارة. 🎓",
+ admissions:"القبول مفتوح من الروضة حتى الصف الثاني عشر. الخطوات بسيطة: استفسار، ثم زيارة للحرم، ثم تقديم وتقييم، ثم القبول. شارك صف طفلك وتاريخ البدء المفضّل وسأرشدك. هل ترغب بحجز زيارة؟",
+ tour:"يسعدنا استقبالك! 🏫 تفضّل بزيارة حرمنا في العنسب لمشاهدة المختبرات والمسبح والفصول. شارك اسمك وصف طفلك واليوم والوقت المناسب، أو راسلنا عبر واتساب ٩٢٩٨٨٩٠٥ ٩٦٨+، وسنؤكّد موعد زيارتك.",
+ sen:"نعم — لدينا برنامج متخصص لذوي الاحتياجات الخاصة والدمج بإشراف أخصائيين (نطق، علاج طبيعي ووظيفي). كل طفل يحظى برعاية متخصصة. أخبرني قليلاً عن طفلك وسنرتّب لقاءً مع فريق الدمج. 💙",
+ transport:"نعم، نوفّر النقل المدرسي ونعمل على توسيع مسارات الحافلات المزوّدة بالتتبّع عبر مسقط (الغبرة، العذيبة، بوشر، الخوض، الحيل، المعبيلة، السيب وغيرها). أخبرني بمنطقتك وسأحدّد أقرب مسار ونقطة ركوب. 🚌",
+ default:"شكراً لرسالتك! 😊 يمكنني المساعدة في القبول والرسوم والمنهج وبرنامج الاحتياجات الخاصة والنقل أو حجز زيارة. يمكنك التواصل عبر واتساب ٩٢٩٨٨٩٠٥ ٩٦٨+ أو admissions@alinjaz.edu.om. كيف أخدمك؟"}};
+function applyChrome(){document.documentElement.dir=lang==='ar'?'rtl':'ltr';document.documentElement.lang=lang;
+ var lb=document.getElementById('langBtn');if(lb)lb.textContent=lang==='ar'?'English':'العربية';
+ var rb=document.getElementById('resetBtn');if(rb)rb.textContent=t('reset');
+ buildNav();
+ var f=document.getElementById('chatFabT');if(f)f.textContent=t('chat_fab');
+ var ct=document.getElementById('chatTitle');if(ct)ct.textContent=t('chat_title');
+ var cs=document.getElementById('chatSub');if(cs)cs.textContent=t('chat_sub');
+ var ci=document.getElementById('chatInput');if(ci)ci.placeholder=t('chat_ph');
+ var sb=document.getElementById('chatSendBtn');if(sb)sb.textContent=t('chat_send');}
+function toggleLang(){lang=(lang==='ar'?'en':'ar');localStorage.setItem('aiinjaz_lang',lang);applyChrome();go(cur);chatReset();}
+const QMAP={adm:'q_adm',tour:'q_tour',fees:'q_fees',sen:'q_sen',transport:'q_bus'};
+const QTOPIC={adm:'admissions',tour:'tour',fees:'fees',sen:'sen',transport:'transport'};
+function chatToggle(){var p=document.getElementById('chatPanel');p.classList.toggle('open');if(p.classList.contains('open')&&!document.getElementById('chatBody').dataset.init)chatReset();}
+function renderQuick(){document.getElementById('chatQuick').innerHTML=Object.keys(QMAP).map(k=>`<button onclick="chatQuick('${k}')">${t(QMAP[k])}</button>`).join('');}
+function addMsg(who,text){var b=document.getElementById('chatBody');var d=document.createElement('div');d.className='msg '+(who==='me'?'me':'bot');d.textContent=text;b.appendChild(d);b.scrollTop=b.scrollHeight;return d;}
+function chatReset(){var b=document.getElementById('chatBody');b.innerHTML='';b.dataset.init='1';addMsg('bot',t('chat_greet'));renderQuick();}
+function chatInit(){chatReset();}
+function chatQuick(k){addMsg('me',t(QMAP[k]));chatAnswer(QTOPIC[k],null);}
+function chatSendInput(){var i=document.getElementById('chatInput');var v=i.value.trim();if(!v)return;i.value='';addMsg('me',v);chatAnswer(null,v);}
+function faq(topic,freeText){var F=FAQ[lang];if(topic&&F[topic])return F[topic];var x=(freeText||'').toLowerCase();
+ if(/fee|cost|price|رسوم|تكلف/.test(x))return F.fees;
+ if(/admiss|enrol|join|قبول|تسجيل|التحاق/.test(x))return F.admissions;
+ if(/tour|visit|زيار/.test(x))return F.tour;
+ if(/special|need|inclus|autism|احتياج|دمج|توحد/.test(x))return F.sen;
+ if(/bus|transport|نقل|حافل/.test(x))return F.transport;
+ return F.default;}
+async function chatAnswer(topic,freeText){var typing=addMsg('bot','…');var ans;
+ if(AI){var q=freeText||faq(topic,null);
+   var prompt=`You are the 24/7 admissions helpline assistant for ${SCHOOL}\nA parent asks: "${freeText||t(QMAP[{admissions:'adm',tour:'tour',fees:'fees',sen:'sen',transport:'transport'}[topic]]||'q_adm')}". Reply ${lang==='ar'?'in Arabic':'in English'}, warm and concise (under 80 words), accurate to the school, and finish with a friendly call to action (book a tour, WhatsApp +968 92988905, or admissions@alinjaz.edu.om). Do not invent exact fees; give the approximate range and offer to confirm.`;
+   try{ans=String(await askAI(prompt)).trim();}catch(e){ans=faq(topic,freeText);}
+   if(!ans||/^\[Live AI/.test(ans))ans=faq(topic,freeText);
+ }else{ans=faq(topic,freeText);}
+ typing.textContent=ans;}
+
+applyChrome();buildNav();go("overview");chatInit();
+</script>
+</body>
+</html>
